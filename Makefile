@@ -1,7 +1,7 @@
 .PHONY: run lint
 
 run:
-	@FLASK_APP=src/main.py flask run
+	@FLASK_APP=fridge/main.py flask run
 
 lint:
 	@pipenv run pylint ./**/*.py
