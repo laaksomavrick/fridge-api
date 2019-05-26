@@ -1,7 +1,7 @@
 .PHONY: run lint format up shell create_migration up_migration down_migration psql repl
 
 run:
-	@FLASK_APP=fridge flask run
+	@FLASK_APP=fridge FLASK_DEBUG=1 flask run
 
 create_migration:
 	@FLASK_APP=fridge flask db migrate
