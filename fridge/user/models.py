@@ -1,6 +1,5 @@
-from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from fridge.extensions import db
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -17,13 +16,3 @@ class User(db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
-
-
-class Sticky(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(128))
-    content = db.Column(db.String())
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
-    def __repr__(self):
-        return '<Sticky {}>'.format(self.title)

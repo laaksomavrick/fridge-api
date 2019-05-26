@@ -10,4 +10,3 @@ class Config():
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         'DATABASE_URI') or 'postgresql://postgres:postgres@localhost:5432/fridge_dev'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-
