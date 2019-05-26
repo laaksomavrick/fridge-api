@@ -1,4 +1,4 @@
-.PHONY: run lint format up shell create_migration up_migration down_migration psql
+.PHONY: run lint format up shell create_migration up_migration down_migration psql repl
 
 run:
 	@FLASK_APP=fridge flask run
@@ -26,3 +26,6 @@ shell:
 
 psql:
 	@psql -U postgres -h 127.0.0.1 -p 5432
+
+repl:
+	@FLASK_APP=fridge flask shell
