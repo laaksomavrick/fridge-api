@@ -1,10 +1,16 @@
-.PHONY: run lint
+.PHONY: run lint format up shell
 
 run:
-	@FLASK_APP=fridge/main.py flask run
+	@FLASK_APP=fridge flask run
 
 lint:
-	@pipenv run pylint ./**/*.py
+	@pylint ./**/*.py
 
 format:
-	@pipenv run autopep8 --in-place --aggressive --aggressive ./**/*.py
+	@autopep8 --in-place --aggressive --aggressive ./**/*.py
+
+up:
+	@docker-compose up
+
+shell:
+	@pipenv shell
