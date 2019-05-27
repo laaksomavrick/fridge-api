@@ -16,6 +16,7 @@ def create_app(config_class=Config):
 
     @app.shell_context_processor
     def make_shell_context():
-        return {'db': db, 'User': user.models.User, 'Sticky': sticky.models.Sticky}
+        return {'db': db, 'User': user.models.User,
+                'Sticky': sticky.models.Sticky}
 
     return app
