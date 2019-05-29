@@ -4,13 +4,13 @@ run:
 	@FLASK_APP=autoapp FLASK_DEBUG=1 flask run
 
 create_migration:
-	FLASK_APP=autoapp flask db migrate
+	@FLASK_APP=autoapp flask db migrate
 
 up_migration:
-	FLASK_APP=autoapp flask db upgrade
+	@FLASK_APP=autoapp flask db upgrade
 
 down_migration:
-	FLASK_APP=autoapp flask db downgrade
+	@FLASK_APP=autoapp flask db downgrade
 
 lint:
 	@pylint ./**/*.py
