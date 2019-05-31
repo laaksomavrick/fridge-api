@@ -6,7 +6,7 @@ from fridge.extensions import db as _db
 
 
 @pytest.fixture(scope='function')
-def app():
+def test_app():
     """An application for the tests."""
     _app = create_app()
 
@@ -26,7 +26,8 @@ def app():
             _db.session.execute(table.delete())
         _db.session.commit()
 
+
 @pytest.fixture(scope='function')
-def testapp(app):
+def app(test_app):
     """A Webtest app."""
-    return TestApp(app)
+    return TestApp(test_app)

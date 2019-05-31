@@ -1,4 +1,4 @@
-.PHONY: run lint format up shell create_migration up_migration down_migration psql repl
+.PHONY: run lint format up shell create_migration up_migration down_migration psql repl test
 
 run:
 	@FLASK_APP=autoapp FLASK_DEBUG=1 flask run
@@ -28,4 +28,7 @@ psql:
 	@psql -U postgres -h 127.0.0.1 -p 5432
 
 repl:
-	FLASK_APP=autoapp flask shell
+	@FLASK_APP=autoapp flask shell
+
+test:
+	@pytest
