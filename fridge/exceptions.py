@@ -6,7 +6,7 @@ def template(data, code=500):
 
 
 USER_PASSWORD_CONFIRMATION_WRONG = template(
-    ['Password must match passwordConfirmation'], code=400)
+    ['Passwords don\'t match'], code=422)
 USER_ALREADY_REGISTERED = template(['User already registered'], code=422)
 
 

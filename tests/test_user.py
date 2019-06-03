@@ -25,7 +25,7 @@ class TestUser:
             'password': 'password',
             'passwordConfirmation': 'something else'
         }, expect_errors=True)
-        assert resp.status_int == 400
+        assert resp.status_int == 422
 
     def test_it_fails_when_user_already_exists(self, app):
         url = url_for('user.create_user')
