@@ -1,4 +1,4 @@
-.PHONY: run lint format up shell create_migration up_migration down_migration psql repl test
+.PHONY: run lint format up shell create_migration up_migration down_migration psql repl test seed
 
 run:
 	@FLASK_APP=autoapp FLASK_DEBUG=1 flask run
@@ -32,3 +32,6 @@ repl:
 
 test:
 	@pytest
+
+seed:
+	@FLASK_APP=autoapp flask seed

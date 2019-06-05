@@ -1,6 +1,7 @@
 from flask import Flask
 
 from fridge import sticky, user
+from fridge.cli import seed
 from fridge.config import Config
 from fridge.exceptions import ApiError
 from fridge.extensions import db, migrate
@@ -17,6 +18,7 @@ def create_app(config_class=Config):
     app.register_blueprint(sticky.routes.blueprint)
 
     register_errorhandlers(app)
+    register_commands(app)
 
     @app.shell_context_processor
     def make_shell_context():
@@ -34,3 +36,7 @@ def register_errorhandlers(app):
         return response
 
     app.errorhandler(ApiError)(errorhandler)
+
+
+def register_commands(app):
+    app.cli.add_command(seed)

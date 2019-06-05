@@ -3,6 +3,7 @@ from webtest import TestApp
 
 from fridge.app import create_app
 from fridge.extensions import db as _db
+from fridge.utils import truncate_tables
 
 
 @pytest.fixture(scope='function')
@@ -19,12 +20,7 @@ def test_app():
     yield _app
 
     ctx.pop()
-    with _app.app_context():
-        meta = _db.metadata
-        for table in reversed(meta.sorted_tables):
-            print('Truncating table {}'.format(table))
-            _db.session.execute(table.delete())
-        _db.session.commit()
+    truncate_tables(_app, _db)
 
 
 @pytest.fixture(scope='function')
