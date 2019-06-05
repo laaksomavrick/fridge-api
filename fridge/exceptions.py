@@ -10,6 +10,7 @@ USER_PASSWORD_CONFIRMATION_WRONG = template(
 USER_ALREADY_REGISTERED = template(['User already registered'], code=422)
 USER_NOT_FOUND = template(['User not found'], code=404)
 USER_BAD_PASSWORD = template(['Password is incorrect'], code=401)
+AUTHORIZATION_REQUIRED = template(['Authorization required'], code=401)
 
 
 class ApiError(Exception):
@@ -41,3 +42,7 @@ class ApiError(Exception):
     @classmethod
     def user_bad_password(cls):
         return cls(**USER_BAD_PASSWORD)
+
+    @classmethod
+    def authorization_required(cls):
+        return cls(**AUTHORIZATION_REQUIRED)
