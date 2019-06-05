@@ -1,8 +1,9 @@
 from flask import Flask
-from fridge import user, sticky
+
+from fridge import sticky, user
 from fridge.config import Config
-from fridge.extensions import db, migrate
 from fridge.exceptions import ApiError
+from fridge.extensions import db, migrate
 
 
 def create_app(config_class=Config):

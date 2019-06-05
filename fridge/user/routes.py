@@ -1,10 +1,14 @@
-from flask import Blueprint, jsonify, current_app
-from flask_apispec import use_kwargs, marshal_with
+from flask import Blueprint, current_app, jsonify
+from flask_apispec import marshal_with, use_kwargs
+from jwt import encode
+
+from fridge.decorators import token_required
 from fridge.exceptions import ApiError
 from fridge.extensions import db
-from .schemas import CreateUserRequestSchema, CreateUserResponseSchema, LoginUserRequestSchema, LoginUserResponseSchema
+
 from .models import User
-from jwt import encode
+from .schemas import (CreateUserRequestSchema, CreateUserResponseSchema,
+                      LoginUserRequestSchema, LoginUserResponseSchema)
 
 blueprint = Blueprint('user', __name__)
 create_user_request_schema = CreateUserRequestSchema()
@@ -43,5 +47,5 @@ def login_user(username, password):
         raise ApiError.user_bad_password()
 
     # TODO: need expiry for prod
-    access_token = encode({'id': user.id}, current_app.config['JWT_SECRET_KEY'], algorithm='HS256')
+    access_token = encode({'user_id': user.id}, current_app.config['JWT_SECRET_KEY'], algorithm='HS256')
     return {'access_token': access_token}
