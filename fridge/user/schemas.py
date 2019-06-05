@@ -29,4 +29,4 @@ class LoginUserRequestSchema(Schema):
         strict = True
 
 class LoginUserResponseSchema(Schema):
-    refreshToken = fields.Str(required=True, attribute='refresh_token')
+    accessToken = fields.Str(required=True, attribute='access_token')

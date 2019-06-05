@@ -1,19 +1,22 @@
-import logging
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, current_app
 from flask_apispec import use_kwargs, marshal_with
 from fridge.exceptions import ApiError
 from fridge.extensions import db
-from .schemas import CreateUserSchema, ReadUserSchema
+from .schemas import CreateUserRequestSchema, CreateUserResponseSchema, LoginUserRequestSchema, LoginUserResponseSchema
 from .models import User
+from jwt import encode
 
 blueprint = Blueprint('user', __name__)
-read_user_schema = ReadUserSchema()
-create_user_schema = CreateUserSchema()
+create_user_request_schema = CreateUserRequestSchema()
+create_user_response_schema = CreateUserResponseSchema()
+
+login_user_request_schema = LoginUserRequestSchema()
+login_user_response_schema = LoginUserResponseSchema()
 
 
 @blueprint.route('/api/user', methods=('POST',))
-@use_kwargs(create_user_schema)
-@marshal_with(read_user_schema)
+@use_kwargs(create_user_request_schema)
+@marshal_with(create_user_response_schema)
 def create_user(username, email, password, password_confirmation):
     if password != password_confirmation:
         raise ApiError.user_password_confirmation_wrong()
@@ -26,3 +29,19 @@ def create_user(username, email, password, password_confirmation):
     db.session.add(user)
     db.session.commit()
     return user
+
+@blueprint.route('/api/user/login', methods=('POST',))
+@use_kwargs(login_user_request_schema)
+@marshal_with(login_user_response_schema)
+def login_user(username, password):
+    user = User.query.filter(User.username == username).first()
+    if user is None:
+        raise ApiError.user_not_found()
+
+    ok_password = user.check_password(password)
+    if ok_password is False:
+        raise ApiError.user_bad_password()
+
+    # TODO: need expiry for prod
+    access_token = encode({'id': user.id}, current_app.config['JWT_SECRET_KEY'], algorithm='HS256')
+    return {'access_token': access_token}

@@ -8,6 +8,8 @@ def template(data, code=500):
 USER_PASSWORD_CONFIRMATION_WRONG = template(
     ['Passwords don\'t match'], code=422)
 USER_ALREADY_REGISTERED = template(['User already registered'], code=422)
+USER_NOT_FOUND = template(['User not found'], code=404)
+USER_BAD_PASSWORD = template(['Password is incorrect'], code=401)
 
 
 class ApiError(Exception):
@@ -31,3 +33,11 @@ class ApiError(Exception):
     @classmethod
     def user_password_confirmation_wrong(cls):
         return cls(**USER_PASSWORD_CONFIRMATION_WRONG)
+
+    @classmethod
+    def user_not_found(cls):
+        return cls(**USER_NOT_FOUND)
+
+    @classmethod
+    def user_bad_password(cls):
+        return cls(**USER_BAD_PASSWORD)
