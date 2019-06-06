@@ -8,9 +8,12 @@ def template(data, code=500):
 USER_PASSWORD_CONFIRMATION_WRONG = template(
     ['Passwords don\'t match'], code=422)
 USER_ALREADY_REGISTERED = template(['User already registered'], code=422)
-USER_NOT_FOUND = template(['User not found'], code=404)
+
 USER_BAD_PASSWORD = template(['Password is incorrect'], code=401)
 AUTHORIZATION_REQUIRED = template(['Authorization required'], code=401)
+
+RESOURCE_NOT_FOUND = template(['Requested resource not found'], code=404)
+FORBIDDEN_RESOURCE = template(['Requested resource is forbidden'], code=403)
 
 
 class ApiError(Exception):
@@ -36,8 +39,8 @@ class ApiError(Exception):
         return cls(**USER_PASSWORD_CONFIRMATION_WRONG)
 
     @classmethod
-    def user_not_found(cls):
-        return cls(**USER_NOT_FOUND)
+    def resource_not_found(cls):
+        return cls(**RESOURCE_NOT_FOUND)
 
     @classmethod
     def user_bad_password(cls):
@@ -46,3 +49,7 @@ class ApiError(Exception):
     @classmethod
     def authorization_required(cls):
         return cls(**AUTHORIZATION_REQUIRED)
+
+    @classmethod
+    def forbidden_resource(cls):
+        return cls(**FORBIDDEN_RESOURCE)

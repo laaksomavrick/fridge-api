@@ -40,7 +40,7 @@ def create_user(username, email, password, password_confirmation):
 def login_user(username, password):
     user = User.query.filter(User.username == username).first()
     if user is None:
-        raise ApiError.user_not_found()
+        raise ApiError.resource_not_found()
 
     ok_password = user.check_password(password)
     if ok_password is False:
